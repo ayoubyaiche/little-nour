@@ -110,6 +110,32 @@ class Creature {
         // Always render as Ayoub in different outfits based on planet type
         this._renderAyoub(ctx);
 
+        if (this.state === 'giveGift') {
+            const giftScale = Math.min(1, this.stateTimer * 2); // pop up quickly
+            // Add a slight floating bounce
+            const bounce = Math.sin(this.stateTimer * 4) * 5;
+            ctx.save();
+            ctx.translate(-this.size * 0.35, -this.size * 0.25 + bounce); // Position above left hand
+            ctx.scale(giftScale, giftScale);
+            
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            // Draw heart or flower depending on planet color theme
+            const icon = this.colors.body === '#4B0082' ? '💖' : '🌸';
+            ctx.font = `${this.size * 0.5}px Arial`;
+            ctx.fillText(icon, 0, 0);
+            
+            // Sparkles around the gift
+            if (Math.random() < 0.1) {
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(Math.random()*40-20, Math.random()*40-20, 2, 0, Math.PI*2);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+        }
+
         ctx.restore();
 
         // Emote bubble (drawn without transforms)
@@ -175,9 +201,13 @@ class Creature {
         // === ARMS ===
         ctx.fillStyle = '#E8C8A0'; // skin
         // Left arm
-        const leftArmWave = this.state === 'reactSuccess' || this.state === 'showHint'
-            ? Math.sin(this.waveArm * 5) * 0.3 - 0.5
-            : 0;
+        let leftArmWave = 0;
+        if (this.state === 'reactSuccess' || this.state === 'showHint') {
+            leftArmWave = Math.sin(this.waveArm * 5) * 0.3 - 0.5;
+        } else if (this.state === 'giveGift') {
+            leftArmWave = -0.8; // Hold arm up steadily to offer gift
+        }
+
         ctx.save();
         ctx.translate(-s * 0.26, s * 0.05);
         ctx.rotate(leftArmWave);

@@ -131,6 +131,37 @@ class AudioManager {
         });
     }
 
+    // Voice over using Web Speech API
+    playVoiceOver(text) {
+        if (!window.speechSynthesis) return;
+        
+        // Cancel any currently playing speech
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.volume = this.masterVolume;
+        // Try to pick a friendly/female voice if available
+        const voices = window.speechSynthesis.getVoices();
+        const friendlyVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google UK English Female') || v.name.includes('Samantha'));
+        if (friendlyVoice) {
+            utterance.voice = friendlyVoice;
+        }
+        
+        utterance.rate = 1.1; // Slightly faster, more energetic
+        utterance.pitch = 1.2; // Slightly higher pitch for a cute voice
+        
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // Magical sound when Ayoub gives a gift
+    playGiftSound() {
+        this.init();
+        this.resume();
+        this._playTone(1046.5, 0.1, 'sine', 0.2); // C6
+        this._playTone(1318.51, 0.15, 'sine', 0.2, 0.1); // E6
+        this._playTone(1567.98, 0.3, 'sine', 0.2, 0.25); // G6
+    }
+
     setMasterVolume(v) {
         this.masterVolume = MathUtils.clamp(v, 0, 1);
     }
