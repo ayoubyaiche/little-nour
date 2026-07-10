@@ -128,17 +128,17 @@ class Creature {
         // Main body (shirt/jacket)
         ctx.fillStyle = outfit.shirt;
         ctx.beginPath();
-        ctx.moveTo(-s * 0.3, -s * 0.05);
-        ctx.lineTo(-s * 0.32, s * 0.4);
-        ctx.lineTo(s * 0.32, s * 0.4);
-        ctx.lineTo(s * 0.3, -s * 0.05);
+        ctx.moveTo(-s * 0.22, -s * 0.05);
+        ctx.lineTo(-s * 0.24, s * 0.4);
+        ctx.lineTo(s * 0.24, s * 0.4);
+        ctx.lineTo(s * 0.22, -s * 0.05);
         ctx.closePath();
         ctx.fill();
 
         // Shoulders (slightly broader than body)
         ctx.fillStyle = outfit.shirt;
         ctx.beginPath();
-        ctx.ellipse(0, -s * 0.02, s * 0.35, s * 0.1, 0, 0, Math.PI);
+        ctx.ellipse(0, -s * 0.02, s * 0.26, s * 0.08, 0, 0, Math.PI);
         ctx.fill();
 
         // Collar / neckline
@@ -153,13 +153,13 @@ class Creature {
         // Pants
         ctx.fillStyle = outfit.pants;
         ctx.beginPath();
-        ctx.moveTo(-s * 0.28, s * 0.38);
-        ctx.lineTo(-s * 0.22, s * 0.6);
-        ctx.lineTo(-s * 0.05, s * 0.6);
+        ctx.moveTo(-s * 0.2, s * 0.38);
+        ctx.lineTo(-s * 0.16, s * 0.6);
+        ctx.lineTo(-s * 0.04, s * 0.6);
         ctx.lineTo(0, s * 0.4);
-        ctx.lineTo(s * 0.05, s * 0.6);
-        ctx.lineTo(s * 0.22, s * 0.6);
-        ctx.lineTo(s * 0.28, s * 0.38);
+        ctx.lineTo(s * 0.04, s * 0.6);
+        ctx.lineTo(s * 0.16, s * 0.6);
+        ctx.lineTo(s * 0.2, s * 0.38);
         ctx.closePath();
         ctx.fill();
 
@@ -179,10 +179,10 @@ class Creature {
             ? Math.sin(this.waveArm * 5) * 0.3 - 0.5
             : 0;
         ctx.save();
-        ctx.translate(-s * 0.35, s * 0.05);
+        ctx.translate(-s * 0.26, s * 0.05);
         ctx.rotate(leftArmWave);
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.12, s * 0.06, s * 0.14, 0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.12, s * 0.05, s * 0.14, 0.1, 0, Math.PI * 2);
         ctx.fill();
         // Hand
         ctx.beginPath();
@@ -192,9 +192,9 @@ class Creature {
 
         // Right arm
         ctx.save();
-        ctx.translate(s * 0.35, s * 0.05);
+        ctx.translate(s * 0.26, s * 0.05);
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.12, s * 0.06, s * 0.14, -0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.12, s * 0.05, s * 0.14, -0.1, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
         ctx.arc(0, s * 0.25, s * 0.05, 0, Math.PI * 2);
