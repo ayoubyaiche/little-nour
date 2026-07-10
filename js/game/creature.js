@@ -151,20 +151,20 @@ class Creature {
         const outfit = this._getOutfitColors();
 
         // === BODY / OUTFIT ===
-        // Main body (shirt/jacket)
+        // Main body (shirt/jacket - very skinny and tall)
         ctx.fillStyle = outfit.shirt;
         ctx.beginPath();
-        ctx.moveTo(-s * 0.22, -s * 0.05);
-        ctx.lineTo(-s * 0.24, s * 0.4);
-        ctx.lineTo(s * 0.24, s * 0.4);
-        ctx.lineTo(s * 0.22, -s * 0.05);
+        ctx.moveTo(-s * 0.18, -s * 0.05);
+        ctx.lineTo(-s * 0.16, s * 0.45);
+        ctx.lineTo(s * 0.16, s * 0.45);
+        ctx.lineTo(s * 0.18, -s * 0.05);
         ctx.closePath();
         ctx.fill();
 
-        // Shoulders (slightly broader than body)
+        // Shoulders (narrow but structured)
         ctx.fillStyle = outfit.shirt;
         ctx.beginPath();
-        ctx.ellipse(0, -s * 0.02, s * 0.26, s * 0.08, 0, 0, Math.PI);
+        ctx.ellipse(0, -s * 0.02, s * 0.22, s * 0.08, 0, 0, Math.PI);
         ctx.fill();
 
         // Collar / neckline
@@ -176,26 +176,26 @@ class Creature {
         ctx.closePath();
         ctx.fill();
 
-        // Pants
+        // Pants (long and skinny)
         ctx.fillStyle = outfit.pants;
         ctx.beginPath();
-        ctx.moveTo(-s * 0.2, s * 0.38);
-        ctx.lineTo(-s * 0.16, s * 0.6);
-        ctx.lineTo(-s * 0.04, s * 0.6);
-        ctx.lineTo(0, s * 0.4);
-        ctx.lineTo(s * 0.04, s * 0.6);
-        ctx.lineTo(s * 0.16, s * 0.6);
-        ctx.lineTo(s * 0.2, s * 0.38);
+        ctx.moveTo(-s * 0.15, s * 0.4);
+        ctx.lineTo(-s * 0.12, s * 0.75);
+        ctx.lineTo(-s * 0.03, s * 0.75);
+        ctx.lineTo(0, s * 0.45);
+        ctx.lineTo(s * 0.03, s * 0.75);
+        ctx.lineTo(s * 0.12, s * 0.75);
+        ctx.lineTo(s * 0.15, s * 0.4);
         ctx.closePath();
         ctx.fill();
 
         // Shoes
         ctx.fillStyle = outfit.shoes;
         ctx.beginPath();
-        ctx.ellipse(-s * 0.14, s * 0.62, s * 0.09, s * 0.035, 0, 0, Math.PI * 2);
+        ctx.ellipse(-s * 0.1, s * 0.78, s * 0.08, s * 0.035, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.ellipse(s * 0.14, s * 0.62, s * 0.09, s * 0.035, 0, 0, Math.PI * 2);
+        ctx.ellipse(s * 0.1, s * 0.78, s * 0.08, s * 0.035, 0, 0, Math.PI * 2);
         ctx.fill();
 
         // === ARMS ===
@@ -209,130 +209,140 @@ class Creature {
         }
 
         ctx.save();
-        ctx.translate(-s * 0.26, s * 0.05);
+        ctx.translate(-s * 0.22, s * 0.05);
         ctx.rotate(leftArmWave);
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.12, s * 0.05, s * 0.14, 0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.15, s * 0.04, s * 0.18, 0.1, 0, Math.PI * 2);
         ctx.fill();
         // Hand
         ctx.beginPath();
-        ctx.arc(0, s * 0.25, s * 0.05, 0, Math.PI * 2);
+        ctx.arc(0, s * 0.3, s * 0.04, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
         // Right arm
         ctx.save();
-        ctx.translate(s * 0.26, s * 0.05);
+        ctx.translate(s * 0.22, s * 0.05);
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.12, s * 0.05, s * 0.14, -0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.15, s * 0.04, s * 0.18, -0.1, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(0, s * 0.25, s * 0.05, 0, Math.PI * 2);
+        ctx.arc(0, s * 0.3, s * 0.04, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
         // === HEAD ===
-        // Neck
+        // Neck (long and elegant)
         ctx.fillStyle = '#E8C8A0';
         ctx.beginPath();
-        ctx.rect(-s * 0.06, -s * 0.12, s * 0.12, s * 0.08);
+        ctx.rect(-s * 0.04, -s * 0.12, s * 0.08, s * 0.12);
         ctx.fill();
 
-        // Head shape
+        // Head shape (sharp jawline, anime boy style)
         ctx.fillStyle = '#E8C8A0';
         ctx.beginPath();
-        ctx.ellipse(0, -s * 0.26, s * 0.22, s * 0.24, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // === HAIR (short, dark — man style) ===
-        ctx.fillStyle = '#2A1A0A'; // very dark brown/black
-        // Top hair
-        ctx.beginPath();
-        ctx.ellipse(0, -s * 0.34, s * 0.24, s * 0.16, 0, Math.PI, 0);
-        ctx.fill();
-
-        // Side hair left
-        ctx.beginPath();
-        ctx.rect(-s * 0.23, -s * 0.38, s * 0.06, s * 0.18);
-        ctx.fill();
-        // Side hair right
-        ctx.beginPath();
-        ctx.rect(s * 0.17, -s * 0.38, s * 0.06, s * 0.18);
-        ctx.fill();
-
-        // Hair top volume
-        ctx.beginPath();
-        ctx.ellipse(0, -s * 0.42, s * 0.2, s * 0.08, 0, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Small front hair tuft
-        ctx.beginPath();
-        ctx.moveTo(-s * 0.05, -s * 0.43);
-        ctx.quadraticCurveTo(s * 0.02, -s * 0.52, s * 0.08, -s * 0.43);
+        ctx.moveTo(-s * 0.15, -s * 0.32); // top left
+        ctx.lineTo(s * 0.15, -s * 0.32);  // top right
+        ctx.lineTo(s * 0.12, -s * 0.15);  // jaw right
+        ctx.lineTo(0, -s * 0.02);         // sharp chin
+        ctx.lineTo(-s * 0.12, -s * 0.15); // jaw left
         ctx.closePath();
+        ctx.fill();
+
+        // === HAIR (stylish, cool swept anime hair) ===
+        ctx.fillStyle = '#1A1025'; // very dark cool tone
+        
+        // Back/Top hair volume
+        ctx.beginPath();
+        ctx.ellipse(0, -s * 0.34, s * 0.18, s * 0.16, 0, Math.PI, 0);
+        ctx.fill();
+
+        // Spiky sweeps on the sides
+        ctx.beginPath();
+        ctx.moveTo(-s * 0.18, -s * 0.34);
+        ctx.lineTo(-s * 0.22, -s * 0.2);
+        ctx.lineTo(-s * 0.12, -s * 0.25);
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.moveTo(s * 0.18, -s * 0.34);
+        ctx.lineTo(s * 0.22, -s * 0.2);
+        ctx.lineTo(s * 0.12, -s * 0.25);
+        ctx.fill();
+
+        // Cool front bangs crossing the forehead
+        ctx.beginPath();
+        ctx.moveTo(-s * 0.1, -s * 0.4);
+        ctx.quadraticCurveTo(s * 0.05, -s * 0.15, s * 0.12, -s * 0.25);
+        ctx.lineTo(0, -s * 0.35);
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.moveTo(s * 0.05, -s * 0.42);
+        ctx.quadraticCurveTo(-s * 0.08, -s * 0.18, -s * 0.15, -s * 0.22);
+        ctx.lineTo(0, -s * 0.35);
         ctx.fill();
 
         // === FACE ===
         // Eyes
         if (!this.isBlinking) {
-            // Eyebrows (thicker, masculine)
-            ctx.strokeStyle = '#2A1A0A';
+            // Eyebrows (intense, slanted, masculine)
+            ctx.strokeStyle = '#1A1025';
             ctx.lineWidth = 2.5;
             ctx.beginPath();
-            ctx.moveTo(-s * 0.15, -s * 0.35);
-            ctx.lineTo(-s * 0.06, -s * 0.37);
+            ctx.moveTo(-s * 0.12, -s * 0.29);
+            ctx.lineTo(-s * 0.03, -s * 0.25);
             ctx.stroke();
             ctx.beginPath();
-            ctx.moveTo(s * 0.06, -s * 0.37);
-            ctx.lineTo(s * 0.15, -s * 0.35);
+            ctx.moveTo(s * 0.03, -s * 0.25);
+            ctx.lineTo(s * 0.12, -s * 0.29);
             ctx.stroke();
 
-            // Eye whites
-            ctx.fillStyle = '#FFFFFF';
+            // Sharp, cool eyes (slanted top lids)
+            ctx.strokeStyle = '#111';
+            ctx.lineWidth = 1.5;
+            
+            // Left eye top lid
             ctx.beginPath();
-            ctx.ellipse(-s * 0.1, -s * 0.27, s * 0.065, s * 0.055, 0, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.moveTo(-s * 0.11, -s * 0.24);
+            ctx.quadraticCurveTo(-s * 0.07, -s * 0.26, -s * 0.04, -s * 0.22);
+            ctx.stroke();
+            
+            // Right eye top lid
             ctx.beginPath();
-            ctx.ellipse(s * 0.1, -s * 0.27, s * 0.065, s * 0.055, 0, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.moveTo(s * 0.11, -s * 0.24);
+            ctx.quadraticCurveTo(s * 0.07, -s * 0.26, s * 0.04, -s * 0.22);
+            ctx.stroke();
 
-            // Irises (brown)
-            ctx.fillStyle = '#4A2E0A';
+            // Irises (deep cool brown)
+            ctx.fillStyle = '#3A2E3A';
             ctx.beginPath();
-            ctx.arc(-s * 0.1, -s * 0.26, s * 0.04, 0, Math.PI * 2);
+            ctx.arc(-s * 0.075, -s * 0.23, s * 0.02, 0, Math.PI * 2);
             ctx.fill();
             ctx.beginPath();
-            ctx.arc(s * 0.1, -s * 0.26, s * 0.04, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Pupils
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.arc(-s * 0.1, -s * 0.255, s * 0.02, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(s * 0.1, -s * 0.255, s * 0.02, 0, Math.PI * 2);
+            ctx.arc(s * 0.075, -s * 0.23, s * 0.02, 0, Math.PI * 2);
             ctx.fill();
 
             // Eye highlights
             ctx.fillStyle = '#fff';
             ctx.beginPath();
-            ctx.arc(-s * 0.115, -s * 0.275, s * 0.012, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(s * 0.085, -s * 0.275, s * 0.012, 0, Math.PI * 2);
+            ctx.arc(-s * 0.085, -s * 0.24, s * 0.008, 0, Math.PI * 2);
+            ctx.arc(s * 0.065, -s * 0.24, s * 0.008, 0, Math.PI * 2);
             ctx.fill();
         } else {
-            // Blinking — closed eyes
-            ctx.strokeStyle = '#2A1A0A';
+            // Blink (sharp closed lines)
+            ctx.strokeStyle = '#111';
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.arc(-s * 0.1, -s * 0.27, s * 0.04, 0, Math.PI);
+            ctx.moveTo(-s * 0.11, -s * 0.23);
+            ctx.lineTo(-s * 0.04, -s * 0.21);
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(s * 0.1, -s * 0.27, s * 0.04, 0, Math.PI);
+            ctx.moveTo(s * 0.04, -s * 0.21);
+            ctx.lineTo(s * 0.11, -s * 0.23);
             ctx.stroke();
         }
+
 
         // Nose
         ctx.fillStyle = '#D4A878';
