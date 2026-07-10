@@ -188,6 +188,11 @@ const GameplayScene = {
         );
         this.nour.setState('drawing');
         this.creature.setState('waitForDraw');
+        
+        // Voice over for the hint
+        if (window.game && window.game.audio) {
+            window.game.audio.playVoiceOver(hint.description);
+        }
     },
 
     _onDrawResult(result) {
@@ -195,7 +200,10 @@ const GameplayScene = {
             this.earnedStars = result.stars;
             this.totalStarsThisPlanet = Math.max(this.totalStarsThisPlanet, result.stars);
 
-            this.creature.setState('reactSuccess');
+            const hint = this.planetData.hints[this.hintIndex];
+            
+            // Ayoub gives a gift instead of just reacting!
+            this.creature.setState('giveGift');
             this.nour.setState('happy');
             this.drawingCanvas.endChallenge();
 
@@ -205,12 +213,13 @@ const GameplayScene = {
 
             if (window.game && window.game.audio) {
                 window.game.audio.playSuccess();
+                window.game.audio.playGiftSound();
+                window.game.audio.playVoiceOver("Wow! Great job!");
                 setTimeout(() => {
                     if (window.game && window.game.audio) window.game.audio.playStarCollect();
                 }, 500);
             }
 
-            const hint = this.planetData.hints[this.hintIndex];
             if (hint.animationType) {
                 // Start creative animation
                 this.currentAnimType = hint.animationType;

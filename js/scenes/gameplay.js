@@ -220,7 +220,6 @@ const GameplayScene = {
                 }, 500);
             }
 
-            const hint = this.planetData.hints[this.hintIndex];
             if (hint.animationType) {
                 // Start creative animation
                 this.currentAnimType = hint.animationType;

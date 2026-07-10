@@ -151,20 +151,20 @@ class Creature {
         const outfit = this._getOutfitColors();
 
         // === BODY / OUTFIT ===
-        // Main body (shirt/jacket - very skinny and tall)
+        // Main body (shirt/jacket - very muscular V-taper)
         ctx.fillStyle = outfit.shirt;
         ctx.beginPath();
-        ctx.moveTo(-s * 0.18, -s * 0.05);
-        ctx.lineTo(-s * 0.16, s * 0.45);
-        ctx.lineTo(s * 0.16, s * 0.45);
-        ctx.lineTo(s * 0.18, -s * 0.05);
+        ctx.moveTo(-s * 0.28, -s * 0.05); // wide chest
+        ctx.lineTo(-s * 0.14, s * 0.45);  // narrow waist
+        ctx.lineTo(s * 0.14, s * 0.45);
+        ctx.lineTo(s * 0.28, -s * 0.05);
         ctx.closePath();
         ctx.fill();
 
-        // Shoulders (narrow but structured)
+        // Shoulders (broad and muscular)
         ctx.fillStyle = outfit.shirt;
         ctx.beginPath();
-        ctx.ellipse(0, -s * 0.02, s * 0.22, s * 0.08, 0, 0, Math.PI);
+        ctx.ellipse(0, -s * 0.02, s * 0.32, s * 0.1, 0, 0, Math.PI);
         ctx.fill();
 
         // Collar / neckline
@@ -209,25 +209,25 @@ class Creature {
         }
 
         ctx.save();
-        ctx.translate(-s * 0.22, s * 0.05);
+        ctx.translate(-s * 0.3, s * 0.05);
         ctx.rotate(leftArmWave);
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.15, s * 0.04, s * 0.18, 0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.15, s * 0.07, s * 0.18, 0.1, 0, Math.PI * 2);
         ctx.fill();
         // Hand
         ctx.beginPath();
-        ctx.arc(0, s * 0.3, s * 0.04, 0, Math.PI * 2);
+        ctx.arc(0, s * 0.32, s * 0.05, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
         // Right arm
         ctx.save();
-        ctx.translate(s * 0.22, s * 0.05);
+        ctx.translate(s * 0.3, s * 0.05);
         ctx.beginPath();
-        ctx.ellipse(0, s * 0.15, s * 0.04, s * 0.18, -0.1, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.15, s * 0.07, s * 0.18, -0.1, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(0, s * 0.3, s * 0.04, 0, Math.PI * 2);
+        ctx.arc(0, s * 0.32, s * 0.05, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
