@@ -20,9 +20,9 @@ const PlanetData = {
                 glowColor: '#9b8bb5'
             },
             hints: [
-                { shape: 'crescent', description: 'Draw a crescent moon' },
-                { shape: 'circle', description: 'Draw a circle (eye)' },
-                { shape: 'zigzag', description: 'Draw a zigzag (branch)' }
+                { shape: 'crescent', description: 'Draw a boat to cross the river', animationType: 'boat_sail' },
+                { shape: 'stairs', description: 'Draw stairs to reach the sky', animationType: 'ayoub_climb' },
+                { shape: 'circle', description: 'Draw a sun to light the night', animationType: 'sun_rise' }
             ],
             difficulty: 1,
             keepsake: { id: 'moonstone', name: 'Moonstone', icon: '🌙' },
@@ -55,8 +55,8 @@ const PlanetData = {
                 glowColor: '#7fdbec'
             },
             hints: [
-                { shape: 'wavy', description: 'Draw wavy water' },
-                { shape: 'circle', description: 'Draw bubbles' }
+                { shape: 'arch', description: 'Draw a bridge for the car', animationType: 'car_bridge' },
+                { shape: 'wavy', description: 'Draw a rain cloud to grow a flower', animationType: 'rain_flower' }
             ],
             difficulty: 1,
             keepsake: { id: 'pearl', name: 'Pearl', icon: '🫧' },

@@ -111,22 +111,22 @@ class Nour {
         this._renderHairBack(ctx, s);
 
         // === Body / Dress ===
-        // Dress body (cute anime style — puffy)
+        // Dress body (skinny cute anime style)
         ctx.fillStyle = '#FF6B8A'; // pink dress
         ctx.beginPath();
-        ctx.moveTo(-s * 0.28, -s * 0.05);
-        ctx.quadraticCurveTo(-s * 0.38, s * 0.35, -s * 0.3, s * 0.45);
-        // Puffy skirt bottom
-        ctx.quadraticCurveTo(-s * 0.2, s * 0.55, 0, s * 0.5);
-        ctx.quadraticCurveTo(s * 0.2, s * 0.55, s * 0.3, s * 0.45);
-        ctx.quadraticCurveTo(s * 0.38, s * 0.35, s * 0.28, -s * 0.05);
+        ctx.moveTo(-s * 0.16, -s * 0.05); // Narrow shoulders
+        ctx.quadraticCurveTo(-s * 0.12, s * 0.35, -s * 0.18, s * 0.48); // Skinny long torso/skirt
+        // Skirt bottom
+        ctx.quadraticCurveTo(-s * 0.1, s * 0.52, 0, s * 0.5);
+        ctx.quadraticCurveTo(s * 0.1, s * 0.52, s * 0.18, s * 0.48);
+        ctx.quadraticCurveTo(s * 0.12, s * 0.35, s * 0.16, -s * 0.05);
         ctx.closePath();
         ctx.fill();
 
         // Dress collar / top section
         ctx.fillStyle = '#FF8FAA';
         ctx.beginPath();
-        ctx.ellipse(0, -s * 0.02, s * 0.22, s * 0.12, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, -s * 0.02, s * 0.14, s * 0.08, 0, 0, Math.PI * 2); // Narrower collar
         ctx.fill();
 
         // Little bow on dress
@@ -200,34 +200,34 @@ class Nour {
         ctx.fill();
         ctx.restore();
 
-        // === Arms (small, cute) ===
+        // === Arms (small, skinny) ===
         ctx.fillStyle = '#FFE0C2';
         // Left arm
         ctx.beginPath();
-        ctx.ellipse(-s * 0.3, s * 0.12, s * 0.04, s * 0.1, 0.2, 0, Math.PI * 2);
+        ctx.ellipse(-s * 0.18, s * 0.15, s * 0.03, s * 0.12, 0.15, 0, Math.PI * 2);
         ctx.fill();
         // Right arm
         ctx.beginPath();
-        ctx.ellipse(s * 0.3, s * 0.12, s * 0.04, s * 0.1, -0.2, 0, Math.PI * 2);
+        ctx.ellipse(s * 0.18, s * 0.15, s * 0.03, s * 0.12, -0.15, 0, Math.PI * 2);
         ctx.fill();
 
-        // === Legs/feet (little shoes) ===
+        // === Legs/feet (skinny, little shoes) ===
         ctx.fillStyle = '#FF4D6D'; // dark pink shoes
         ctx.beginPath();
-        ctx.ellipse(-s * 0.1, s * 0.52, s * 0.07, s * 0.035, 0, 0, Math.PI * 2);
+        ctx.ellipse(-s * 0.07, s * 0.54, s * 0.06, s * 0.03, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.beginPath();
-        ctx.ellipse(s * 0.1, s * 0.52, s * 0.07, s * 0.035, 0, 0, Math.PI * 2);
+        ctx.ellipse(s * 0.07, s * 0.54, s * 0.06, s * 0.03, 0, 0, Math.PI * 2);
         ctx.fill();
 
         // Shoe straps
         ctx.strokeStyle = '#CC3355';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(-s * 0.1, s * 0.5, s * 0.04, Math.PI, 0);
+        ctx.arc(-s * 0.07, s * 0.52, s * 0.03, Math.PI, 0);
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(s * 0.1, s * 0.5, s * 0.04, Math.PI, 0);
+        ctx.arc(s * 0.07, s * 0.52, s * 0.03, Math.PI, 0);
         ctx.stroke();
 
         // === Hair accessory — small star clip ===
@@ -342,17 +342,16 @@ class Nour {
         // Top of head hair volume
         ctx.beginPath();
         ctx.arc(0, -s * 0.3, s * 0.27, Math.PI, 0);
-        ctx.quadraticCurveTo(s * 0.28, -s * 0.15, s * 0.25, -s * 0.12);
-        ctx.lineTo(-s * 0.25, -s * 0.12);
-        ctx.quadraticCurveTo(-s * 0.28, -s * 0.15, -s * 0.27, -s * 0.3);
+        // Curve back along the forehead
+        ctx.quadraticCurveTo(0, -s * 0.35, -s * 0.27, -s * 0.3);
         ctx.fill();
 
         // Anime-style bangs (choppy, layered)
         // Center bang
         ctx.beginPath();
         ctx.moveTo(-s * 0.08, -s * 0.42);
-        ctx.lineTo(-s * 0.04, -s * 0.2);
-        ctx.lineTo(s * 0.04, -s * 0.2);
+        ctx.lineTo(-s * 0.04, -s * 0.34);
+        ctx.lineTo(s * 0.04, -s * 0.34);
         ctx.lineTo(s * 0.08, -s * 0.42);
         ctx.closePath();
         ctx.fill();
@@ -360,8 +359,8 @@ class Nour {
         // Left bangs
         ctx.beginPath();
         ctx.moveTo(-s * 0.22, -s * 0.38);
-        ctx.quadraticCurveTo(-s * 0.2, -s * 0.22, -s * 0.12, -s * 0.18);
-        ctx.lineTo(-s * 0.05, -s * 0.22);
+        ctx.quadraticCurveTo(-s * 0.2, -s * 0.3, -s * 0.12, -s * 0.32);
+        ctx.lineTo(-s * 0.05, -s * 0.35);
         ctx.lineTo(-s * 0.1, -s * 0.42);
         ctx.closePath();
         ctx.fill();
@@ -369,8 +368,8 @@ class Nour {
         // Right bangs
         ctx.beginPath();
         ctx.moveTo(s * 0.22, -s * 0.38);
-        ctx.quadraticCurveTo(s * 0.2, -s * 0.22, s * 0.12, -s * 0.18);
-        ctx.lineTo(s * 0.05, -s * 0.22);
+        ctx.quadraticCurveTo(s * 0.2, -s * 0.3, s * 0.12, -s * 0.32);
+        ctx.lineTo(s * 0.05, -s * 0.35);
         ctx.lineTo(s * 0.1, -s * 0.42);
         ctx.closePath();
         ctx.fill();

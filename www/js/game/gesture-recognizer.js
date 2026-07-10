@@ -248,15 +248,56 @@ class GestureRecognizer {
             vertices.push({ x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r });
         }
         for (let i = 0; i < vertices.length - 1; i++) {
-            for (let t = 0; t < 8; t++) {
+            for (let t = 0; t < 10; t++) {
                 pts.push({
-                    x: MathUtils.lerp(vertices[i].x, vertices[i + 1].x, t / 8),
-                    y: MathUtils.lerp(vertices[i].y, vertices[i + 1].y, t / 8)
+                    x: MathUtils.lerp(vertices[i].x, vertices[i + 1].x, t / 10),
+                    y: MathUtils.lerp(vertices[i].y, vertices[i + 1].y, t / 10)
                 });
             }
         }
         return pts;
     }
+
+    _generateArch(cx, cy, r) {
+        const pts = [];
+        const numPoints = 32;
+        for (let i = 0; i <= numPoints; i++) {
+            const angle = Math.PI - (Math.PI * i) / numPoints; // Left to right top half arc
+            pts.push({ x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r });
+        }
+        return pts;
+    }
+
+    _generateStairs(startX, startY, endX, endY, steps = 3) {
+        const pts = [];
+        const vertices = [];
+        const stepW = (endX - startX) / steps;
+        const stepH = (endY - startY) / steps;
+        
+        let cx = startX;
+        let cy = startY;
+        vertices.push({ x: cx, y: cy });
+        
+        for (let i = 0; i < steps; i++) {
+            // Horizontal
+            cx += stepW;
+            vertices.push({ x: cx, y: cy });
+            // Vertical
+            cy += stepH;
+            vertices.push({ x: cx, y: cy });
+        }
+        
+        for (let i = 0; i < vertices.length - 1; i++) {
+            for (let t = 0; t < 10; t++) {
+                pts.push({
+                    x: MathUtils.lerp(vertices[i].x, vertices[i + 1].x, t / 10),
+                    y: MathUtils.lerp(vertices[i].y, vertices[i + 1].y, t / 10)
+                });
+            }
+        }
+        return pts;
+    }
+
 
     _generateCrescent(cx, cy, r) {
         const pts = [];
@@ -394,6 +435,13 @@ class GestureRecognizer {
 
         // Hexagon
         this.addTemplate('hexagon', this._generateHexagon(cx, cy, r));
+
+        // Creative Animations:
+        // Arch (Bridge)
+        this.addTemplate('arch', this._generateArch(cx, cy, r));
+        // Stairs
+        this.addTemplate('stairs', this._generateStairs(50, 250, 250, 50, 3));
+        this.addTemplate('stairs', this._generateStairs(50, 250, 250, 50, 4));
     }
 
     // Get template points for hint display (un-processed, in canvas space)
@@ -410,6 +458,8 @@ class GestureRecognizer {
             case 'spiral': return this._generateSpiral(cx, cy, r, 2);
             case 'line': return this._generateLine(cx - r, cy, cx + r, cy);
             case 'hexagon': return this._generateHexagon(cx, cy, r);
+            case 'arch': return this._generateArch(cx, cy, r);
+            case 'stairs': return this._generateStairs(cx - r, cy + r, cx + r, cy - r, 3);
             default: return this._generateCircle(cx, cy, r);
         }
     }

@@ -127,6 +127,16 @@ const GameplayScene = {
                 }
                 break;
 
+            case 'creative_anim':
+                if (this.phaseTimer > 4) { // animations last ~4 seconds
+                    // After animation, show reward
+                    this.showReward = true;
+                    this.rewardTimer = 0;
+                    this.rewardStars = this.earnedStars; // Store from before
+                    this._setPhase('success');
+                }
+                break;
+
             case 'success':
                 if (this.phaseTimer > 2.5) {
                     // Check if more hints remain
@@ -200,11 +210,19 @@ const GameplayScene = {
                 }, 500);
             }
 
-            this.showReward = true;
-            this.rewardTimer = 0;
-            this.rewardStars = result.stars;
-
-            this._setPhase('success');
+            const hint = this.planetData.hints[this.hintIndex];
+            if (hint.animationType) {
+                // Start creative animation
+                this.currentAnimType = hint.animationType;
+                this.currentAnimStroke = result.strokePoints;
+                this._setPhase('creative_anim');
+            } else {
+                // Standard success
+                this.showReward = true;
+                this.rewardTimer = 0;
+                this.rewardStars = result.stars;
+                this._setPhase('success');
+            }
 
         } else {
             // Retry
@@ -256,6 +274,11 @@ const GameplayScene = {
 
         // Phase-specific overlays
         this._renderPhaseOverlay(ctx, w, h);
+
+        // Creative Animation
+        if (this.phase === 'creative_anim' && this.currentAnimType) {
+            this._renderCreativeAnimation(ctx, w, h);
+        }
 
         // Reward popup
         if (this.showReward) {
@@ -446,5 +469,164 @@ const GameplayScene = {
         this.nour = null;
         this.drawingCanvas = null;
         this.particles = null;
+    },
+
+    _renderCreativeAnimation(ctx, w, h) {
+        if (!this.currentAnimStroke || this.currentAnimStroke.length === 0) return;
+
+        const pts = this.currentAnimStroke;
+        const progress = MathUtils.clamp(this.phaseTimer / 3.5, 0, 1); // 0 to 1 over 3.5s
+
+        // 1. Draw the user's stroke
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 1; i < pts.length; i++) {
+            ctx.lineTo(pts[i].x, pts[i].y);
+        }
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.lineWidth = 6;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        
+        // Add a slight glow
+        ctx.shadowColor = 'white';
+        ctx.shadowBlur = 10;
+        ctx.stroke();
+        ctx.restore();
+
+        // 2. Render specific animation
+        ctx.save();
+        switch (this.currentAnimType) {
+            case 'car_bridge': {
+                // Find position along the stroke based on progress
+                const tIndex = Math.min(Math.floor(progress * pts.length), pts.length - 1);
+                const pos = pts[tIndex];
+                
+                // Draw a cute little car at `pos`
+                if (pos) {
+                    ctx.translate(pos.x, pos.y - 15);
+                    // Car body
+                    ctx.fillStyle = '#FF4D6D';
+                    Renderer.roundedRect(ctx, -20, -10, 40, 20, 5);
+                    // Car roof
+                    ctx.fillStyle = '#FF8FAA';
+                    Renderer.roundedRect(ctx, -10, -20, 20, 15, 5);
+                    // Wheels
+                    ctx.fillStyle = '#1A1A1A';
+                    ctx.beginPath(); ctx.arc(-12, 10, 6, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(12, 10, 6, 0, Math.PI*2); ctx.fill();
+                }
+                break;
+            }
+            case 'rain_flower': {
+                // Rain drops falling from the cloud (stroke)
+                ctx.fillStyle = '#7FDBEC';
+                for(let i=0; i<10; i++) {
+                    const dropProgress = (progress * 5 + i * 0.3) % 1;
+                    const pt = pts[Math.floor((i / 10) * pts.length) || 0];
+                    if (pt) {
+                        ctx.beginPath();
+                        ctx.arc(pt.x, pt.y + dropProgress * 100, 3, 0, Math.PI*2);
+                        ctx.fill();
+                    }
+                }
+                // Flower growing below the center of the cloud
+                const centerPt = pts[Math.floor(pts.length / 2)];
+                if (centerPt) {
+                    const growP = MathUtils.clamp((progress - 0.2) * 2, 0, 1);
+                    const fY = centerPt.y + 120; // ground level approx
+                    ctx.translate(centerPt.x, fY);
+                    ctx.scale(growP, growP);
+                    // Stem
+                    ctx.fillStyle = '#98FB98';
+                    ctx.fillRect(-2, -40, 4, 40);
+                    // Petals
+                    ctx.fillStyle = '#FFB6C1';
+                    for(let p=0; p<5; p++){
+                        ctx.beginPath();
+                        ctx.ellipse(Math.cos(p*Math.PI*2/5)*10, -40 + Math.sin(p*Math.PI*2/5)*10, 8, 4, p*Math.PI*2/5, 0, Math.PI*2);
+                        ctx.fill();
+                    }
+                    // Center
+                    ctx.fillStyle = '#FFD700';
+                    ctx.beginPath(); ctx.arc(0, -40, 5, 0, Math.PI*2); ctx.fill();
+                }
+                break;
+            }
+            case 'ayoub_climb': {
+                // Ayoub climbs the stairs
+                const tIndex = Math.min(Math.floor(progress * pts.length), pts.length - 1);
+                const pos = pts[tIndex];
+                if (pos) {
+                    ctx.translate(pos.x, pos.y - 20); // Ayoub sits above the stair line
+                    // Draw a mini Ayoub representation
+                    ctx.fillStyle = this.planetData.creatureColors.body;
+                    ctx.beginPath(); ctx.arc(0, 0, 15, 0, Math.PI*2); ctx.fill();
+                    // Eyes
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath(); ctx.arc(-5, -3, 4, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(5, -3, 4, 0, Math.PI*2); ctx.fill();
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath(); ctx.arc(-5, -3, 2, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(5, -3, 2, 0, Math.PI*2); ctx.fill();
+                }
+                // Star at the end
+                const endPt = pts[pts.length - 1];
+                if (endPt) {
+                    ctx.save();
+                    ctx.translate(endPt.x + 20, endPt.y - 20);
+                    ctx.globalAlpha = 0.5 + 0.5 * Math.sin(this.phaseTimer * 10);
+                    ctx.fillStyle = '#FFD700';
+                    ctx.font = '24px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('⭐', 0, 0);
+                    ctx.restore();
+                }
+                break;
+            }
+            case 'boat_sail': {
+                // Boat sails along the crescent
+                const tIndex = Math.min(Math.floor(progress * pts.length), pts.length - 1);
+                const pos = pts[tIndex];
+                if (pos) {
+                    ctx.translate(pos.x, pos.y - 10);
+                    // Sailboat
+                    ctx.fillStyle = '#D2B48C';
+                    ctx.beginPath(); ctx.arc(0, 0, 15, 0, Math.PI); ctx.fill(); // hull
+                    ctx.fillStyle = '#FFF';
+                    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -20); ctx.lineTo(15, -5); ctx.fill(); // sail
+                }
+                break;
+            }
+            case 'sun_rise': {
+                // Sun rises from the drawn circle
+                let cx = 0, cy = 0;
+                pts.forEach(p => { cx+=p.x; cy+=p.y; });
+                cx /= pts.length; cy /= pts.length;
+                
+                const rise = progress * 100;
+                ctx.translate(cx, cy - rise);
+                ctx.fillStyle = '#FFD700';
+                ctx.shadowColor = '#FF8C00';
+                ctx.shadowBlur = 20 + 10 * Math.sin(this.phaseTimer * 5);
+                ctx.beginPath(); ctx.arc(0, 0, 30, 0, Math.PI*2); ctx.fill();
+                
+                // Rays
+                ctx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
+                ctx.lineWidth = 4;
+                for(let r=0; r<8; r++) {
+                    const angle = (r * Math.PI*2)/8 + this.phaseTimer;
+                    ctx.beginPath();
+                    ctx.moveTo(Math.cos(angle)*35, Math.sin(angle)*35);
+                    ctx.lineTo(Math.cos(angle)*50, Math.sin(angle)*50);
+                    ctx.stroke();
+                }
+                break;
+            }
+        }
+        ctx.restore();
     }
 };
